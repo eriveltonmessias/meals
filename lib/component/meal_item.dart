@@ -12,8 +12,7 @@ void _selectMeal(ctx){
   Navigator.of(ctx).pushNamed(
     AppRoutes.MAEL_DETAIL,
     arguments: meal,
-
-  );
+  ).then((value) => print(value));
 }
 
   @override

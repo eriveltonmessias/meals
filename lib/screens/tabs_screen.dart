@@ -1,37 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:meals/component/main_drawer.dart';
 import 'package:meals/screens/categories_screen.dart';
 import 'package:meals/screens/favorite_screen.dart';
 
-class TabsScreen extends StatelessWidget {
+class TabsScreen extends StatefulWidget {
 
 
   @override
+  _TabsScreenState createState() => _TabsScreenState();
+}
+
+class _TabsScreenState extends State<TabsScreen> {
+
+
+  int _selectedScreenIndex = 0;
+
+  final List<Widget> _screens = [
+      CategoriesScreen(),
+      FavoriteScreen()
+  ];
+
+  final List<String> _titles = [
+      'Categorias',
+      'Meus favoritos'
+  ];
+ 
+  _selectScreen(int index){
+    setState(() {
+      _selectedScreenIndex = index;
+    });
+
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController( 
-      length: 2,
-      child: Scaffold(appBar: AppBar(
-          title: Text('Minhas comidas favoritas'),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.category),
-                text: 'Categorias',
-              ),
-               Tab(
-                icon: Icon(Icons.star),
-                text: 'Favoritos',
-              )
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          _titles[_selectedScreenIndex]),
+      ),
+      drawer: Drawer(
+        child: MainDrawer(),
+        ),
+      body: _screens[_selectedScreenIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _selectScreen,
+        backgroundColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Theme.of(context).accentColor,
+        currentIndex: _selectedScreenIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categorias'
           ),
-        ),
-        body: TabBarView(
-          children:[
-            CategoriesScreen(),
-            FavoriteScreen()
-          ] 
-              
-        ),
-      )
-    );
+           BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Favoritos'
+          )
+        ],), 
+         );
   }
 }

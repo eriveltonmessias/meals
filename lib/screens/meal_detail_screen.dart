@@ -90,6 +90,10 @@ Widget _createSectionTitle(BuildContext context, String title){
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.star),
+        onPressed: () => Navigator.of(context).pop(meal.title),
+        ),
     );
   }
 }
